@@ -66,7 +66,7 @@ impl Program for ResizeIndicatorInternal {
     fn view(&self) -> cosmic::Element<'_, Self::Message> {
         let edges = self.edges.lock().unwrap();
         let icon_container_style = || {
-            theme::Container::custom(|theme| container::Appearance {
+            theme::Container::custom(|theme| container::Style {
                 icon_color: Some(Color::from(theme.cosmic().accent.on)),
                 text_color: Some(Color::from(theme.cosmic().accent.on)),
                 background: Some(Background::Color(theme.cosmic().accent_color().into())),
@@ -90,14 +90,13 @@ impl Program for ResizeIndicatorInternal {
                 .prefer_svg(true)
                 .apply(container)
                 .padding(8)
-                .style(icon_container_style())
+                .class(icon_container_style())
                 .width(Length::Shrink)
                 .apply(container)
-                .center_x()
-                .width(Length::Fill)
+                .center_x(Length::Fill)
                 .into()
             } else {
-                vertical_space(36).into()
+                vertical_space().height(36).into()
             },
             row(vec![
                 if edges.contains(ResizeEdge::LEFT) {
@@ -110,35 +109,29 @@ impl Program for ResizeIndicatorInternal {
                     .prefer_svg(true)
                     .apply(container)
                     .padding(8)
-                    .style(icon_container_style())
+                    .class(icon_container_style())
                     .width(Length::Shrink)
                     .apply(container)
-                    .center_y()
-                    .height(Length::Fill)
+                    .center_y(Length::Fill)
                     .into()
                 } else {
-                    horizontal_space(36).into()
+                    horizontal_space().width(36).into()
                 },
                 row(vec![
                     text::heading(&self.shortcut1).into(),
                     text::body(fl!("grow-window")).into(),
-                    horizontal_space(40).into(),
+                    horizontal_space().width(40).into(),
                     text::heading(&self.shortcut2).into(),
                     text::body(fl!("shrink-window")).into(),
                 ])
                 .apply(container)
-                .center_x()
-                .center_y()
                 .padding(16)
+                .center_x(Length::Shrink)
+                .center_y(Length::Shrink)
+                .class(icon_container_style())
                 .apply(container)
-                .style(icon_container_style())
-                .width(Length::Shrink)
-                .height(Length::Shrink)
-                .apply(container)
-                .height(Length::Fill)
-                .width(Length::Fill)
-                .center_x()
-                .center_y()
+                .center_x(Length::Fill)
+                .center_y(Length::Fill)
                 .into(),
                 if edges.contains(ResizeEdge::RIGHT) {
                     from_name(if self.direction == ResizeDirection::Outwards {
@@ -150,14 +143,13 @@ impl Program for ResizeIndicatorInternal {
                     .prefer_svg(true)
                     .apply(container)
                     .padding(8)
-                    .style(icon_container_style())
+                    .class(icon_container_style())
                     .height(Length::Shrink)
                     .apply(container)
-                    .center_y()
-                    .height(Length::Fill)
+                    .center_y(Length::Fill)
                     .into()
                 } else {
-                    horizontal_space(36).into()
+                    horizontal_space().width(36).into()
                 },
             ])
             .width(Length::Fill)
@@ -173,14 +165,13 @@ impl Program for ResizeIndicatorInternal {
                 .prefer_svg(true)
                 .apply(container)
                 .padding(8)
-                .style(icon_container_style())
+                .class(icon_container_style())
                 .width(Length::Shrink)
                 .apply(container)
-                .center_x()
-                .width(Length::Fill)
+                .center_x(Length::Fill)
                 .into()
             } else {
-                vertical_space(36).into()
+                vertical_space().height(36).into()
             },
         ])
         .into()
